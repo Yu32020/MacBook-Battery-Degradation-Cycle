@@ -1,108 +1,104 @@
-# MacBook Battery Degradation Cycle (Beta 0.1)
+# MacBook Battery Degradation Cycle (Beta 0.2)
 
-A macOS shell script to automatically cycle battery charge and discharge to test long-term degradation.
+A macOS shell script to cycle battery charge/discharge between 10% and 100% and log stats to evaluate long-term degradation.  
+**CLI-only, headless (no GUI pop-ups).**
 
 ---
 
 ## 🧰 Requirements
-Before running, make sure these tools are installed:
 
+Install **Battery CLI** (no GUI needed):
+```bash
+curl -sS https://raw.githubusercontent.com/actuallymentor/battery/main/setup.sh | bash
+battery visudo
+battery status
+```
+
+Install other tools:
 ```bash
 brew install brightness stress-ng
-brew install --cask battery
-open -a Battery
-battery visudo
 ```
 
 ---
 
 ## ▶️ Usage
 
-1. **Clone or download the repository:**
-   ```bash
-   git clone https://github.com/Yu32020/MacBook-Battery-Degradation-Cycle.git
-   cd MacBook-Battery-Degradation-Cycle
-   ```
+```bash
+chmod +x battery_looper_v5.sh
+./battery_looper_v5.sh
+```
 
-2. **Grant permission and run:**
-   ```bash
-   chmod +x battery_looper_v5.sh
-   ./battery_looper_v5.sh
-   ```
+What it does:
+- Forces **max brightness**.
+- Applies **CPU load** to accelerate discharge.
+- **Discharges to 10%**, then **charges to 100%**, looping automatically.
+- Writes logs to `~/battery_cycle_log.csv`:
+  - `timestamp, battery_percent, state, cycle_count, health_percent, note`
+- Safe stop: press **Ctrl + C** (restores charging and power settings).
 
-3. **What it does:**
-   - Discharges the battery to 10%.
-   - Charges it back to 100%.
-   - Repeats the cycle automatically.
-   - Logs battery percentage, health, and cycles in `~/battery_cycle_log.csv`.
-
-Press **Ctrl + C** to stop safely (it will restore all power settings automatically).
+Tip:
+```bash
+tail -f ~/battery_cycle_log.csv
+```
 
 ---
 
 ## ⚙️ Version
-**Beta 0.1** — Initial public beta release.
+**Beta 0.2 — CLI-only, headless.**
 
 ---
 
 ## 🪪 License
-MIT License © 2025 Yu32020
+MIT License © 2025
 
 ---
 
 # 💡 中文说明（Chinese Version）
 
 ## 📘 项目简介
-这是一个用于 **MacBook 电池老化测试** 的自动化 Shell 脚本。  
-它能自动控制电池循环充放电，以观察电池健康度随循环次数的变化。
+用于评估 **MacBook 电池长期老化** 的自动化脚本。  
+循环在 **10% ↔ 100%** 之间充放电，并记录日志。  
+**仅使用 Battery 的 CLI，不唤起 GUI，因此不会弹窗。**
 
 ---
 
 ## 🧰 运行前准备
-请先确保你已安装以下工具：
 
+安装 **Battery CLI**（无需 GUI）：
 ```bash
-brew install brightness stress-ng
-brew install --cask battery
-open -a Battery
+curl -sS https://raw.githubusercontent.com/actuallymentor/battery/main/setup.sh | bash
 battery visudo
+battery status
 ```
 
-这些工具的作用如下：
-- `brightness`：控制屏幕亮度；
-- `stress-ng`：制造 CPU 压力，加速放电；
-- `battery`：AlDente 提供的 CLI，用于充放电控制。
+安装其它依赖：
+```bash
+brew install brightness stress-ng
+```
 
 ---
 
 ## ▶️ 使用方法
 
-1. 克隆或下载本仓库：
-   ```bash
-   git clone https://github.com/Yu32020/MacBook-Battery-Degradation-Cycle.git
-   cd MacBook-Battery-Degradation-Cycle
-   ```
+```bash
+chmod +x battery_looper_v5.sh
+./battery_looper_v5.sh
+```
 
-2. 赋予执行权限并运行：
-   ```bash
-   chmod +x battery_looper_v5.sh
-   ./battery_looper_v5.sh
-   ```
+脚本会：
+- 强制 **最高亮度**；
+- 施加 **CPU 压力** 加速放电；
+- **放电到 10%** 后 **自动充到 100%**，持续循环；
+- 日志写入 `~/battery_cycle_log.csv`，字段为：
+  - `timestamp, battery_percent, state, cycle_count, health_percent, note`
+- **Ctrl + C** 可安全停止（会恢复充电与电源设置）。
 
-3. 脚本会自动执行以下流程：
-   - 放电至 10%；
-   - 自动充电至 100%；
-   - 持续循环；
-   - 并将日志记录到 `~/battery_cycle_log.csv`。
-
-按下 **Ctrl + C** 可安全中止，程序会自动恢复充电状态及节能设置。
+查看日志：
+```bash
+tail -f ~/battery_cycle_log.csv
+```
 
 ---
 
-## ⚙️ 版本信息
-**Beta 0.1** — 首个公开测试版。
-
----
-
-## 🪪 许可证
-MIT 开源许可证 © 2025 Yu32020
+## ⚙️ 版本
+**Beta 0.2 —— 仅 CLI、无弹窗。**
