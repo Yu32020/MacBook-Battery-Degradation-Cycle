@@ -53,7 +53,7 @@ MIT License © 2025
 
 ---
 
-# 💡 中文说明（Chinese Version）
+# 💡 中文说明
 
 ## 📘 项目简介
 用于评估 **MacBook 电池长期老化** 的自动化脚本。  
