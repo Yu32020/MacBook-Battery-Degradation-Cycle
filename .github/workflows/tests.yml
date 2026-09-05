@@ -1,0 +1,14 @@
+name: macOS shell tests
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: macos-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test with the system Bash (mocked hardware only)
+        run: /bin/bash tests/test_battery_looper.sh
